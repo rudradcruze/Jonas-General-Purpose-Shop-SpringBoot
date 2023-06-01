@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @Controller
@@ -24,9 +25,11 @@ public class AccountController {
         }
         String username = principal.getName();
         Customer customer = customerService.findByUsername(username);
+        model.addAttribute("title", customer.getFirstName() + " account");
+
         model.addAttribute("customer", customer);
 
-        return "account";
+        return "profile-info";
     }
 
     @RequestMapping(value = "/update-infor", method = {RequestMethod.GET, RequestMethod.PUT})
@@ -41,6 +44,9 @@ public class AccountController {
         Customer customerSaved = customerService.saveInfor(customer);
 
         redirectAttributes.addFlashAttribute("customer", customerSaved);
+
+        model.addAttribute("customer", customerSaved);
+
 
         return "redirect:/account";
     }

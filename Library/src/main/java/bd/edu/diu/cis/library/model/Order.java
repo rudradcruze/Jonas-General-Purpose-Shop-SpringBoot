@@ -19,9 +19,11 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
     private Date orderDate;
-    private Date deliveryDate;
+    private String paymentStatus;
+    private String paymentType;
+    private String transitionId;
     private double totalPrice;
-    private double shippingFee;
+    private double discountPrice;
     private String orderStatus;
     private String notes;
     @ManyToOne(fetch = FetchType.EAGER)

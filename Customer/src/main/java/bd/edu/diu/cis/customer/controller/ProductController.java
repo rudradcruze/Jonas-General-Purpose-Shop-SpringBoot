@@ -39,6 +39,7 @@ public class ProductController {
         List<Product>  products = productService.getRelatedProducts(categoryId);
         model.addAttribute("product", product);
         model.addAttribute("products", products);
+        model.addAttribute("title", product.getName());
         return "product-detail";
     }
 

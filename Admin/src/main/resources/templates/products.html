@@ -86,7 +86,7 @@
                                             </td>
                                             <td>
                                                 <a th:if = "${product.activated == false}" th:href="@{/visible-product/{id} (id = ${product.id})}" class="badge badge-sa-success">Enable</a>
-                                                <a th:if = "${product.deleted == false}" th:href = "@{/hide-product/{id} (id = ${product.id})}" class="badge badge-sa-danger">Delete</a>
+                                                <a th:if = "${product.deleted == false}" th:href = "@{/hide-product/{id} (id = ${product.id})}" class="badge badge-sa-danger">Hide</a>
                                             </td>
                                             <td>
                                                 <div class="dropdown">

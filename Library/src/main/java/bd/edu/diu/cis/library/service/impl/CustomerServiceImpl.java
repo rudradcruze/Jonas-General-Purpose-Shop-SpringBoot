@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -18,6 +19,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Override
+    public List<Customer> listAll() {
+        return (List<Customer>) customerRepository.findAll();
+    }
 
     @Override
     public CustomerDto save(CustomerDto customerDto) {
@@ -41,11 +47,28 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer saveInfor(Customer customer) {
         Customer customer1 = customerRepository.findByUsername(customer.getUsername());
+        customer1.setFirstName(customer.getFirstName());
+        customer1.setLastName(customer.getLastName());
         customer1.setAddress(customer.getAddress());
         customer1.setCity(customer.getCity());
         customer1.setCountry(customer.getCountry());
         customer1.setPhoneNumber(customer.getPhoneNumber());
         return customerRepository.save(customer1);
+    }
+
+    @Override
+    public double calculateDiscount(double amount) {
+        double discountAmount;
+        if (amount >= 1000 && amount < 2000)
+            discountAmount = (amount * 5.0) / 100;
+        else if (amount >= 2000 && amount < 3000) {
+            discountAmount = (amount * 8.0) / 100;
+        } else {
+            discountAmount = (amount * 15.0) / 100;
+        }
+
+        return discountAmount;
+
     }
 
     private CustomerDto mapperDTO(Customer customer){

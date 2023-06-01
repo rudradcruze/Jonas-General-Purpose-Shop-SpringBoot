@@ -33,28 +33,12 @@ public class LoginController {
         return "sign-in";
     }
 
-    @RequestMapping("/index")
-    public String home(Model model){
-        model.addAttribute("title", "Home Page");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || authentication instanceof  AnonymousAuthenticationToken){
-            return "redirect:/login";
-        }
-        return "index";
-    }
-
    @GetMapping("/register")
     public String register(Model model){
         model.addAttribute("title", "Register");
         model.addAttribute("adminDto", new AdminDto());
         return "sign-up";
    }
-
-//   @GetMapping("/forgot-password")
-//    public String forgotPassword(Model model){
-//        model.addAttribute("title", "Forgot Password");
-//        return "forgot-password";
-//   }
 
    @PostMapping("/register-new")
    public String addNewAdmin(@Valid @ModelAttribute("adminDto")AdminDto adminDto,

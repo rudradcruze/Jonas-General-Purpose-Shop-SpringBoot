@@ -47,7 +47,7 @@ public class CustomerConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/do-login")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)

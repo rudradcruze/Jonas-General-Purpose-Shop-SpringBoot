@@ -48,9 +48,4 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.is_activated = true and p.is_deleted = false order by p.costPrice ")
     List<Product> filterLowPrice();
 
-
-
-
-
-
 }

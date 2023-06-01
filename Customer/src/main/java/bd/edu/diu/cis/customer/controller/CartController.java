@@ -28,21 +28,29 @@ public class CartController {
 
     @GetMapping("/cart")
     public String cart(Model model, Principal principal, HttpSession session){
+
         if(principal == null){
             return "redirect:/login";
         }
         String username = principal.getName();
         Customer customer = customerService.findByUsername(username);
         ShoppingCart shoppingCart = customer.getShoppingCart();
+
         if(shoppingCart == null){
             model.addAttribute("check", "No item in your cart");
+            return "redirect:/products";
         }
-        session.setAttribute("totalItems", shoppingCart.getTotalItems());
-        model.addAttribute("subTotal", shoppingCart.getTotalPrices());
-        model.addAttribute("shoppingCart", shoppingCart);
-        return "cart";
-    }
 
+        if(shoppingCart != null) {
+            session.setAttribute("totalItems", shoppingCart.getTotalItems());
+            model.addAttribute("subTotal", shoppingCart.getTotalPrices());
+            model.addAttribute("discountPrice", customerService.calculateDiscount(shoppingCart.getTotalPrices()));
+        }
+
+        model.addAttribute("shoppingCart", shoppingCart);
+
+        return "shoping-cart";
+    }
 
     @PostMapping("/add-to-cart")
     public String addItemToCart(
@@ -62,7 +70,6 @@ public class CartController {
         return "redirect:" + request.getHeader("Referer");
 
     }
-
 
     @RequestMapping(value = "/update-cart", method = RequestMethod.POST, params = "action=update")
     public String updateCart(@RequestParam("quantity") int quantity,
@@ -102,7 +109,4 @@ public class CartController {
         }
 
     }
-
-
-
 }

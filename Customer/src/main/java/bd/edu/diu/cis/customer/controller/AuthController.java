@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class AuthController {
@@ -22,14 +23,18 @@ public class AuthController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "login";
+    public String login(Principal principal, Model model) {
+        if (principal != null)
+            return "redirect:/";
+        model.addAttribute("title", "JGPS - Login");
+        return "sign-in";
     }
 
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("customerDto", new CustomerDto());
-        return "register";
+        model.addAttribute("title", "JGPS - Sing Up");
+        return "sign-up";
     }
 
 
@@ -40,29 +45,28 @@ public class AuthController {
         try {
             if (result.hasErrors()) {
                 model.addAttribute("customerDto", customerDto);
-                return "register";
+                return "sign-up";
             }
             Customer customer = customerService.findByUsername(customerDto.getUsername());
             if(customer != null){
                 model.addAttribute("username", "Username have been registered");
                 model.addAttribute("customerDto",customerDto);
-                return "register";
+                return "sign-up";
             }
             if(customerDto.getPassword().equals(customerDto.getRepeatPassword())){
                 customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
                 customerService.save(customerDto);
                 model.addAttribute("success", "Register successfully");
-                return "register";
+                return "sign-up";
             }else{
                 model.addAttribute("password", "Password is not same");
                 model.addAttribute("customerDto",customerDto);
-                return "register";
+                return "sign-up";
             }
         }catch (Exception e){
             model.addAttribute("error", "Server have ran some problems");
             model.addAttribute("customerDto",customerDto);
         }
-        return "register";
+        return "sign-up";
     }
-
 }
