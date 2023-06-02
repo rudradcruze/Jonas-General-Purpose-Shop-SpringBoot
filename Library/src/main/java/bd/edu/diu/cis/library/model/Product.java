@@ -24,10 +24,6 @@ public class Product {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
-
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

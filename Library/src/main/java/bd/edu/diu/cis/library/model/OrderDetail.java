@@ -16,7 +16,6 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_detail_id")
     private Long id;
-
     private int quantity;
     private double totalPrice;
     private double unitPrice;

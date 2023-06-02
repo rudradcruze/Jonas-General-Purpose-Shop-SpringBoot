@@ -63,8 +63,10 @@ public class CustomerServiceImpl implements CustomerService {
             discountAmount = (amount * 5.0) / 100;
         else if (amount >= 2000 && amount < 3000) {
             discountAmount = (amount * 8.0) / 100;
-        } else {
+        } else if(amount >= 3000) {
             discountAmount = (amount * 15.0) / 100;
+        } else {
+            discountAmount = 0;
         }
 
         return discountAmount;
