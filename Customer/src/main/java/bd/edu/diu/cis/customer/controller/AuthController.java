@@ -50,7 +50,7 @@ public class AuthController {
             Customer customer = customerService.findByUsername(customerDto.getUsername());
             if(customer != null){
                 model.addAttribute("username", "Username have been registered");
-                model.addAttribute("customerDto",customerDto);
+                model.addAttribute("customerDto", customerDto);
                 return "sign-up";
             }
             if(customerDto.getPassword().equals(customerDto.getRepeatPassword())){
